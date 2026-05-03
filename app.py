@@ -17,8 +17,9 @@ CORS(app)
 
 # Geçici dosya klasörü
 DOWNLOAD_DIR = "/tmp/clipflow"
+JOBS_FILE = "/tmp/clipflow/jobs.json"
+COOKIE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cookies.txt")
 os.makedirs(DOWNLOAD_DIR, exist_ok=True)
-
 # İş durumları (gerçek uygulamada Redis kullanılır)
 jobs = {}
 
