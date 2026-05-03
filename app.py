@@ -49,10 +49,11 @@ def get_ydl_opts(job_id, quality="720", format_type="mp4", remove_audio=False):
             "quiet": True,
         }
     quality_map = {
-        "1080": "bestvideo[height<=1080]+bestaudio/best[height<=1080]",
-        "720":  "bestvideo[height<=720]+bestaudio/best[height<=720]",
-        "480":  "bestvideo[height<=480]+bestaudio/best[height<=480]",
-    }
+quality_map = {
+    "1080": "bestvideo[height<=1080][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<=1080]+bestaudio/best",
+    "720":  "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<=720]+bestaudio/best",
+    "480":  "bestvideo[height<=480][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<=480]+bestaudio/best",
+}    }
     fmt = quality_map.get(quality, quality_map["720"])
     opts = {
         "format": fmt,
