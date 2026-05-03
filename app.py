@@ -50,7 +50,7 @@ def get_ydl_opts(job_id, format_type="mp4", remove_audio=False):
             "quiet": True,
         }
     opts = {
-        "format": "bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio/best",
+        "format": "best",
         "outtmpl": output_path,
         "merge_output_format": "mp4",
         "cookiefile": "/app/cookies.txt",
