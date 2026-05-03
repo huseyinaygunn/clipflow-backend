@@ -46,8 +46,7 @@ def get_ydl_opts(job_id, format_type="mp4", remove_audio=False):
                 "preferredcodec": "mp3",
                 "preferredquality": "192",
             }],
-            os.path.join(os.path.dirname(__file__), "cookies.txt"),
-            "quiet": True,
+"cookiefile": os.path.join(os.path.dirname(__file__), "cookies.txt"),            "quiet": True,
         }
     opts = {
         "format": "best",
