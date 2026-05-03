@@ -36,22 +36,38 @@ def cleanup_file(path, delay=300):
     threading.Thread(target=_delete, daemon=True).start()
 
 
-def get_ydl_opts(job_id, quality="720", format_type="mp4", remove_audio=False):
+def get_ydl_opts(job_id, format_type="mp4", remove_audio=False):
     output_path = os.path.join(DOWNLOAD_DIR, f"{job_id}.%(ext)s")
-
-    # Format seçimi
+    
+    base_opts = {
+        "outtmpl": output_path,
+        "quiet": True,
+        "no_warnings": True,
+        "http_headers": {
+            "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1",
+        },
+    }
+    
     if format_type == "mp3":
-        return {
+        base_opts.update({
             "format": "bestaudio/best",
-            "outtmpl": output_path,
             "postprocessors": [{
                 "key": "FFmpegExtractAudio",
                 "preferredcodec": "mp3",
                 "preferredquality": "192",
             }],
-            "quiet": True,
-        }
-
+        })
+        return base_opts
+    
+    base_opts.update({
+        "format": "best[ext=mp4]/best",
+        "merge_output_format": "mp4",
+    })
+    
+    if remove_audio:
+        base_opts["postprocessor_args"] = ["-an"]
+    
+    return base_opts
     # Kalite haritası
     quality_map = {
         "1080": "bestvideo[height<=1080]+bestaudio/best[height<=1080]",
