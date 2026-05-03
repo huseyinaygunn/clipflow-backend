@@ -48,13 +48,7 @@ def get_ydl_opts(job_id, quality="720", format_type="mp4", remove_audio=False):
             }],
             "quiet": True,
         }
-    quality_map = {
-quality_map = {
-    "1080": "bestvideo[height<=1080][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<=1080]+bestaudio/best",
-    "720":  "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<=720]+bestaudio/best",
-    "480":  "bestvideo[height<=480][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<=480]+bestaudio/best",
-}    }
-    fmt = quality_map.get(quality, quality_map["720"])
+    fmt = "bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio/best"
     opts = {
         "format": fmt,
         "outtmpl": output_path,
@@ -113,8 +107,8 @@ def health():
 @app.route("/download", methods=["POST"])
 def start_download():
     data = request.get_json()
-    url         = data.get("url", "").strip()
-    quality     = data.get("quality", "720")
+    url = data.get("url", "").strip()
+    quality = data.get("quality", "720")
     format_type = data.get("format", "mp4")
     remove_audio = data.get("removeAudio", False)
     if not url:
@@ -138,7 +132,7 @@ def get_status(job_id):
     if not job:
         return jsonify({"error": "İş bulunamadı"}), 404
     response = {
-        "status":   job["status"],
+        "status": job["status"],
         "progress": job.get("progress", 0),
     }
     if job["status"] == "completed":
