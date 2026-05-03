@@ -117,9 +117,13 @@ def download_video(job_id, url, quality, format_type, remove_audio):
 
 @app.route("/health", methods=["GET"])
 def health():
-    """Sunucu durumu kontrolü"""
-    return jsonify({"status": "ok", "service": "ClipFlow Backend"})
-
+    cookie_exists = os.path.exists(COOKIE_FILE)
+    return jsonify({
+        "status": "ok",
+        "service": "ClipFlow Backend",
+        "cookie_file": COOKIE_FILE,
+        "cookie_exists": cookie_exists
+    })
 
 @app.route("/info", methods=["POST"])
 def get_info():
